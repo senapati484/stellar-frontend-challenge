@@ -100,18 +100,44 @@ export class StellarHelper {
     amount: string;
     memo?: string;
   }): Promise<{ hash: string; success: boolean }> {
-    const account = await this.server.loadAccount(params.from);
+    let account;
+    try {
+      account = await this.server.loadAccount(params.from);
+    } catch (e: any) {
+      if (e.response && e.response.status === 404) {
+        throw new Error("Your account is not funded on the Testnet! Please use Friendbot to get free test XLM first.");
+      }
+      throw e;
+    }
+
+    // Step 2: Check if destination account exists. If not, use CreateAccount operation.
+    let isDestinationFunded = true;
+    try {
+      await this.server.loadAccount(params.to);
+    } catch (e: any) {
+      if (e.response && e.response.status === 404) {
+        isDestinationFunded = false;
+      }
+    }
+
+    let operation;
+    if (isDestinationFunded) {
+      operation = StellarSdk.Operation.payment({
+        destination: params.to,
+        asset: StellarSdk.Asset.native(),
+        amount: params.amount,
+      });
+    } else {
+      operation = StellarSdk.Operation.createAccount({
+        destination: params.to,
+        startingBalance: params.amount,
+      });
+    }
 
     const transactionBuilder = new StellarSdk.TransactionBuilder(account, {
       fee: StellarSdk.BASE_FEE,
       networkPassphrase: this.networkPassphrase,
-    }).addOperation(
-      StellarSdk.Operation.payment({
-        destination: params.to,
-        asset: StellarSdk.Asset.native(),
-        amount: params.amount,
-      })
-    );
+    }).addOperation(operation);
 
     if (params.memo) {
       transactionBuilder.addMemo(StellarSdk.Memo.text(params.memo));
@@ -119,7 +145,7 @@ export class StellarHelper {
 
     const transaction = transactionBuilder.setTimeout(180).build();
 
-    // Wallet Kit ile imzala
+    // Sign with Wallet Kit
     const { signedTxXdr } = await this.kit.signTransaction(transaction.toXDR(), {
       networkPassphrase: this.networkPassphrase,
     });

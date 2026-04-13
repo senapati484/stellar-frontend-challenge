@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Font Face Declarations */
+@font-face {
+  font-family: 'DxDynamix';
+  src: url('/DxDynamix-Free-Personal-Use/OTF/DxDynamix-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DxDynamix';
+  src: url('/DxDynamix-Free-Personal-Use/OTF/DxDynamix-BoldSlanted.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: #F3EFEC;
+}
+
+body {
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #F3EFEC;
+  color: #24211D;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+}
+
+/* Custom Scrollbar for a clean feel */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4D2CD;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B4B1AB;
+}
+
+@layer utilities {
+  /* Minimalist Claude-like Card */
+  .claude-card {
+    @apply bg-surface border border-borderInner rounded-xl shadow-sm transition-all duration-200;
+  }
+  
+  .claude-card:hover {
+    @apply border-borderOuter shadow-md;
+  }
+
+  /* Text selection color */
+  ::selection {
+    @apply bg-accent/20 text-textMain;
+  }
+
+  /* Minimal Input */
+  .claude-input {
+    @apply w-full bg-surface border border-borderInner rounded-lg px-4 py-2 text-textMain placeholder-textMuted/60 transition-all duration-200;
+  }
+  .claude-input:focus {
+    @apply outline-none border-borderOuter shadow-[0_0_0_2px_rgba(217,119,87,0.1)];
+  }
+
+  /* Minimal Button */
+  .claude-button {
+    @apply inline-flex items-center justify-center font-medium transition-all duration-200 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .claude-button-primary {
+    @apply bg-primary text-white hover:bg-textMain border border-transparent shadow-sm;
+  }
+  .claude-button-secondary {
+    @apply bg-surface text-textMain border border-borderOuter hover:bg-[#F0EEEB] shadow-sm;
+  }
+}
+
+/* Animations */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.4s ease-out forwards;
+}
+
+.stagger-1 { animation-delay: 0.1s; opacity: 0; }
+.stagger-2 { animation-delay: 0.2s; opacity: 0; }
+.stagger-3 { animation-delay: 0.3s; opacity: 0; }
+.stagger-4 { animation-delay: 0.4s; opacity: 0; }
+.stagger-5 { animation-delay: 0.5s; opacity: 0; }

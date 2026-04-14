@@ -2,6 +2,7 @@
 
 A beautifully minimalist, light-themed payment dashboard built on the Stellar blockchain. This repository completely abstracts away complex blockchain mechanics using the [Stellar Wallets Kit](https://github.com/Creit-Tech/Stellar-Wallets-Kit), while delivering a pristine, premium user experience heavily inspired by the aesthetic of **Claude Code**.
 
+[![Live Demo](https://img.shields.io/badge/Live-Vercel-success)](https://stellar-challenge-frontend.vercel.app/)
 [![Stellar Testnet](https://img.shields.io/badge/Network-Testnet-blue)](https://stellar.org)
 [![Next.js](https://img.shields.io/badge/Next.js-14.2-black)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.4-blue)](https://www.typescriptlang.org/)
@@ -111,3 +112,11 @@ const transactions = await stellar.getRecentTransactions(address, 10);
 This represents a comprehensive final standard for minimalistic Web3 design. If you wish to extend the UI (for instance, creating charting interfaces, integrating standard Soroban smart contracts, or building multiple asset bridges), please submit a Pull Request! 
 
 **Built exclusively to prove that Web3 doesn't have to look like Web3.**
+
+---
+
+## 👤 Author
+Developed and designed by **Sayan Senapati (senapati484)**. 
+
+- **Live Site**: [stellar-challenge-frontend.vercel.app](https://stellar-challenge-frontend.vercel.app/)
+- **Repository**: [senapati484/stellar-frontend-challenge](https://github.com/senapati484/stellar-frontend-challenge)
